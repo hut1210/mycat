@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.mycat.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="cn.wolfcode.mycat.domain.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+    </resultMap>
+
+    <insert id="insert" parameterType="cn.wolfcode.mycat.domain.User">
+        insert into user (
+            id,
+            name
+        )values (
+            #{user.id},
+            #{user.name}
+        )
+        <!--ON DUPLICATE KEY update
+            id=VALUES(id)
+            <if test="user!=null and user.name!=null and user.name!=''">
+                ,name = VALUES(name)
+            </if>-->
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from user order by id
+    </select>
+    <select id="selectById" resultType="cn.wolfcode.mycat.domain.User">
+        select * from user where id=#{id}
+    </select>
+
+</mapper>
